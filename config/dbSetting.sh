@@ -10,5 +10,6 @@ for DB in template_postgis "$POSTGRES_DB" "${@}"; do
     echo "Add new extensions"
     psql --dbname="$DB" -c "
         CREATE EXTENSION IF NOT EXISTS tds_fdw;
+        CREATE EXTENSION IF NOT EXISTS pgagent;
     "
 done

@@ -30,12 +30,15 @@ RUN wget https://github.com/tds-fdw/tds_fdw/archive/v2.0.0-alpha.3.tar.gz \
     && make USE_PGXS=1 \
     && make USE_PGXS=1 install
 
-RUN rm -rf /var/lib/apt/lists/* \
+RUN apt-get purge -y wget postgresql-server-dev-11 build-essential ca-certificates \
+    && apt-get autoremove -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tds_fdw-2.0.0-alpha.3 \
-    && rm /v2.0.0-alpha.3.tar.gz \
-    && alias ll="ls -al"
+    && rm /v2.0.0-alpha.3.tar.gz
+
 
 RUN mkdir -p /docker-entrypoint-initdb.d
 COPY ./config/initdb-postgis.sh /docker-entrypoint-initdb.d/initdb-postgis.sh
-COPY ./config/new-extension.sh /docker-entrypoint-initdb.d/new-extension.sh
 COPY ./config/postgresql.conf /etc/postgresql/postgresql.conf
+COPY ./config/dbSetting.sh /docker-entrypoint-initdb.d/dbSetting.sh
