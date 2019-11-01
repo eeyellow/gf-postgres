@@ -39,6 +39,6 @@ RUN apt-get purge -y wget postgresql-server-dev-11 build-essential ca-certificat
 
 
 RUN mkdir -p /docker-entrypoint-initdb.d
-COPY ./config/initdb-postgis.sh /docker-entrypoint-initdb.d/initdb-postgis.sh
+COPY ./config/01.initdb-postgis.sh /docker-entrypoint-initdb.d/01.initdb-postgis.sh
 COPY ./config/postgresql.conf /etc/postgresql/postgresql.conf
-COPY ./config/dbSetting.sh /docker-entrypoint-initdb.d/dbSetting.sh
+COPY ./config/02.dbSetting.sh /docker-entrypoint-initdb.d/02.dbSetting.sh
